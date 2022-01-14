@@ -1,0 +1,57 @@
+[
+  {
+    "identifier": "1",
+    "userName ": "bergkamp",
+    "familyName": "Bergkamp",
+    "givenName": "Dennis",
+    "active": true,
+    "password": "123456",
+    "email": "@email.com",
+    "groups": "",
+    "roles": ""
+  },
+  {
+    "identifier": "2",
+    "userName ": "pele",
+    "familyName": "Arantes do Nascimento",
+    "givenName": "Edson",
+    "active": true,
+    "password": "123456",
+    "email": "@email.com",
+    "groups": "",
+    "roles": ""
+  },
+  {
+    "identifier": "3",
+    "userName ": "fenomeno",
+    "familyName": "Nazario dos Santos",
+    "givenName": "Ronaldo",
+    "active": true,
+    "password": "123456",
+    "email": "@email.com",
+    "groups": "",
+    "roles": ""
+  },
+  {
+    "identifier": "4",
+    "userName ": "cruyff",
+    "familyName": "Cruyff",
+    "givenName": "Johan",
+    "active": true,
+    "password": "123456",
+    "email": "@email.com",
+    "groups": "",
+    "roles": ""
+  },
+  {
+    "identifier": "5",
+    "userName ": "platini",
+    "familyName": "Platini",
+    "givenName": "Michel",
+    "active": true,
+    "password": "123456",
+    "email": "michelplatini@email.com",
+    "groups": "",
+    "roles": ""
+  }
+]

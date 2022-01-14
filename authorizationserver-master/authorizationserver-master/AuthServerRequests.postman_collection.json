@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "72d3cfbd-fc4f-46a6-ac8d-47b4eb83e375",
+		"name": "AuthorizationServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SCIM",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Groups",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Users/6a9b4a56-a375-4343-aa69-b78fc93bd3fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Users",
+								"6a9b4a56-a375-4343-aa69-b78fc93bd3fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Group",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Groups/355382ea-9c94-40d4-a2dc-5c4feb0b2554",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Groups",
+								"355382ea-9c94-40d4-a2dc-5c4feb0b2554"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Group Member",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Groups/355382ea-9c94-40d4-a2dc-5c4feb0b2554/members/6a9b4a56-a375-4343-aa69-b78fc93bd3fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Groups",
+								"355382ea-9c94-40d4-a2dc-5c4feb0b2554",
+								"members",
+								"6a9b4a56-a375-4343-aa69-b78fc93bd3fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Group Member",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/Groups/355382ea-9c94-40d4-a2dc-5c4feb0b2554/members/6a9b4a56-a375-4343-aa69-b78fc93bd3fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"Groups",
+								"355382ea-9c94-40d4-a2dc-5c4feb0b2554",
+								"members",
+								"6a9b4a56-a375-4343-aa69-b78fc93bd3fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"gender\": \"MALE\",\n\t\"firstName\": \"Bruce\",\n\t\"lastName\": \"Wayne\",\n\t\"username\": \"bwayne\",\n\t\"password\": \"secret\",\n    \"email\": \"bruce.wayne@example.com\",\n    \"phone\": \"0711-1234567\",\n    \"groups\": [\n    \t  \"library_user\"\n    ],\n    \"addresses\": [\n    \t{\n    \t\t\"street\": \"Batman\",\n    \t\t\"zip\": \"70179\",\n    \t\t\"city\": \"Stuttgart\",\n    \t\t\"state\": \"Baden-Württemberg\",\n    \t\t\"country\": \"Germany\"\n    \t}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OIDC",
+			"item": [
+				{
+					"name": "Discovery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/.well-known/openid-configuration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								".well-known",
+								"openid-configuration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JWKS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/jwks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"jwks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserInfo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIxIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIzOWZkOTVlYy00ZjZmLTQ3ZjctOTJmMC0xNmJiYjdmODMyZWUiLCJjdHgiOiJwZXJzb25hbCIsInJvbGVzIjpbIlVTRVIiXSwiaXNzIjoiaHR0cDpcL1wvbG9jYWxob3N0OjkwOTBcL2F1dGgiLCJncm91cHMiOlsibGlicmFyeV91c2VyIl0sInByZWZlcnJlZF91c2VybmFtZSI6ImJ3YXluZSIsImxvY2FsZSI6ImRlIiwiZ2l2ZW5fbmFtZSI6IkJydWNlIiwiY2xpZW50X2lkIjoiY29uZmlkZW50aWFsLWp3dCIsImF1ZCI6ImNvbmZpZGVudGlhbC1qd3QiLCJuYmYiOjE2MTU4MTU2NzIsInNjb3BlIjoicHJvZmlsZSIsIm5hbWUiOiJid2F5bmUiLCJuaWNrbmFtZSI6ImJ3YXluZSIsImV4cCI6MTYxNTgxNjI3MiwiaWF0IjoxNjE1ODE1NjcyLCJmYW1pbHlfbmFtZSI6IldheW5lIiwianRpIjoiMjNhM2FlYTktM2E4MC00YzJlLTlkMGEtZmFiYWY5MjA0YTA1In0.XanfdqMKXHKd0tbrbbdSOAzlgp4N0w-v-Hh_LEDxc-KT4nowEHpuo8gv7WPQohy5ACkvNuwY4s0aWVSHipoipFITKDtK_gFpo06VIupngXUEX2Zw28KPlR_Rm3Mug-IfTTnzY87Ktn8mEDZywUdIKkXCN433LsGEUG5y-SljUT2gcBVD4I4MERjJOnRKn1Ls8JcPU_wcV76f3ukAiOZJqDN2E1kjIZIgPTPV5WVYrdk7E9cOMo55uzyCwaZ35POjSBPojPsKJmIwfTf70OCUpHijctJU4--Y0kTKKcyAdvJCUkxqpdPPdyWMzl-ziWfPWj2pJI54U2cLsKVnK4wX5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/userinfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"userinfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "List Clients",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/api/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"api",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "eyJraWQiOiIxIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI1NWJjN2EwMS0zZGIyLTQ2Y2QtOTVmOS1jNGY4ZDRhZTk1NTciLCJjdHgiOiJwZXJzb25hbCIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6OTA5MFwvYXV0aCIsImxvY2FsZSI6ImRlIiwiY2xpZW50X2lkIjoiY29uZmlkZW50aWFsLWp3dCIsImF1ZCI6ImNvbmZpZGVudGlhbC1qd3QiLCJuYmYiOjE2MTAxNDU1MzcsInNjb3BlIjoib3BlbmlkIiwibmFtZSI6ImFkbWluIiwiZXhwIjoxNjEwMTQ2MTM3LCJpYXQiOjE2MTAxNDU1MzcsImp0aSI6IjI2NWRkMmYyLTAyMjQtNDNhZi05MmU1LTUxN2QwN2RhYzZjYiJ9.NJQ3rKGMB5qpx0xyjSuHtEUfTILjmyv8ZLj4pSZhtwzkCWAfL7eAd5NimHXpA4QZ0fadDuKqOnHea-SLQ3njDF18qiIDg5xoZPtTDE7sEKpDx6wU1X6P-gpCqtUvBej-5JN5j-ACZjj83JUlZohgaUsmeLMp2rILYTpPcejjJYU2CgGN93I5DAm8JvNzPPnNuf3Nxgg3Tr-bRI9_K3aiE57Yt6jqjhYSLV8IbMSwwsFRbJqCwBrlTv53r2l9vP4ftpygwkXvg9t6QN14mdG9GWnBB77ML3IS_9i-3fFvIpO3JYt1APt6q5jKmHrLON5wv5_lP1p17VOgUJW-rwUQtw",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "profile",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "AdminToken",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "http://localhost:8080/demo-client/login/oauth2/code/demo",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "demo",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "confidential-jwt",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:9090/auth/token",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "http://localhost:9090/auth/authorize",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "state",
+				"value": "123456",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

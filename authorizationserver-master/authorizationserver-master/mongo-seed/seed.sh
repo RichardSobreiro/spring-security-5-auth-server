@@ -1,0 +1,2 @@
+mongoimport --authenticationDatabase admin --username admin --password admin! --host mongodb --db auth-server --collection users --type json --file /users.json --jsonArray
+mongoimport --authenticationDatabase admin --username admin --password admin! --host mongodb --db auth-server --collection clients --type json --file /clients.json --jsonArray

@@ -1,0 +1,12 @@
+[
+  {
+    "identifier": "1",
+    "clientId": "",
+    "clientSecret ": "",
+    "confidential": true,
+    "accessTokenFormat": "",
+    "grantTypes": "",
+    "redirectUris": "",
+    "corsUris": ""
+  }
+]

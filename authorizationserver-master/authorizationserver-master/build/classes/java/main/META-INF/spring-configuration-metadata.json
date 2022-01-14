@@ -1,0 +1,60 @@
+{
+  "groups": [
+    {
+      "name": "auth-server",
+      "type": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties"
+    },
+    {
+      "name": "auth-server.access-token",
+      "type": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$AccessToken",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties",
+      "sourceMethod": "getAccessToken()"
+    },
+    {
+      "name": "auth-server.id-token",
+      "type": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$IdToken",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties",
+      "sourceMethod": "getIdToken()"
+    },
+    {
+      "name": "auth-server.refresh-token",
+      "type": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$RefreshToken",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties",
+      "sourceMethod": "getRefreshToken()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "auth-server.access-token.default-format",
+      "type": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$TokenType",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$AccessToken"
+    },
+    {
+      "name": "auth-server.access-token.lifetime",
+      "type": "java.time.Duration",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$AccessToken"
+    },
+    {
+      "name": "auth-server.id-token.lifetime",
+      "type": "java.time.Duration",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$IdToken"
+    },
+    {
+      "name": "auth-server.issuer",
+      "type": "java.net.URI",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties"
+    },
+    {
+      "name": "auth-server.refresh-token.lifetime",
+      "type": "java.time.Duration",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$RefreshToken"
+    },
+    {
+      "name": "auth-server.refresh-token.max-lifetime",
+      "type": "java.time.Duration",
+      "sourceType": "br.com.authorizationserver.config.AuthorizationServerConfigurationProperties$RefreshToken"
+    }
+  ],
+  "hints": []
+}
