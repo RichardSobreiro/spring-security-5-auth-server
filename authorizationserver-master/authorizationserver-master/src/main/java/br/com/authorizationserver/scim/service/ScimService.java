@@ -1,5 +1,6 @@
 package br.com.authorizationserver.scim.service;
 
+import br.com.authorizationserver.scim.entities.User;
 import br.com.authorizationserver.scim.model.ScimGroupEntity;
 import br.com.authorizationserver.scim.api.resource.ScimUserResource;
 import br.com.authorizationserver.scim.dao.ScimGroupEntityRepository;
@@ -8,6 +9,8 @@ import br.com.authorizationserver.scim.dao.ScimUserGroupEntityRepository;
 import br.com.authorizationserver.scim.model.ScimAddressEntity;
 import br.com.authorizationserver.scim.model.ScimUserEntity;
 import br.com.authorizationserver.scim.model.ScimUserGroupEntity;
+import br.com.authorizationserver.security.user.repository.interfaces.UserRepositoryCustom;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,10 @@ import java.util.stream.Collectors;
 public class ScimService {
 
     private final ScimUserEntityRepository scimUserEntityRepository;
+
+    @Autowired
+    private UserRepositoryCustom userRepositoryCustom;
+
     private final ScimGroupEntityRepository scimGroupEntityRepository;
     private final ScimUserGroupEntityRepository scimUserGroupEntityRepository;
     private final IdGenerator idGenerator;
@@ -35,11 +42,23 @@ public class ScimService {
     }
 
     public Optional<ScimUserEntity> findUserByIdentifier(UUID identifier) {
-        return scimUserEntityRepository.findOneByIdentifier(identifier);
+        Optional<User> user = this.userRepositoryCustom.findOneByIdentifier(identifier.toString());
+        if (user != null) {
+            Optional<ScimUserEntity> scimUserMongoDB = user.map(ScimUserEntity::new);
+            return scimUserMongoDB;
+        } else {
+            return scimUserEntityRepository.findOneByIdentifier(identifier);
+        }
     }
 
     public Optional<ScimUserEntity> findUserByUserName(String username) {
-        return scimUserEntityRepository.findOneByUserName(username);
+        Optional<User> user = this.userRepositoryCustom.loadUserByUsername(username);
+        if (user != null) {
+            Optional<ScimUserEntity> scimUserMongoDB = user.map(ScimUserEntity::new);
+            return scimUserMongoDB;
+        } else {
+            return scimUserEntityRepository.findOneByUserName(username);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

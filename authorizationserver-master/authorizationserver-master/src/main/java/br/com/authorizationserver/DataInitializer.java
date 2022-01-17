@@ -59,16 +59,75 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         long countUsers = this.scimUserEntityRepository.count();
         if (countUsers == 0) {
-            createGroups();
-            createAdminUser();
-            createUsers();
-            createGroupMappings();
+//            createGroups();
+//            createAdminUser();
+//            createUsers();
+//            createGroupMappings();
         }
 
         long countClients = this.registeredClientRepository.count();
         if (countClients == 0) {
             createClients();
         }
+    }
+
+    private void createClients() {
+        Set<RegisteredClient> registeredClients =
+                Stream.of(
+                                new RegisteredClient(
+                                        UUID.randomUUID(),
+                                        "confidential-jwt",
+                                        passwordEncoder.encode("demo"),
+                                        true,
+                                        AccessTokenFormat.JWT,
+                                        Set.of(GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS, GrantType.PASSWORD, GrantType.REFRESH_TOKEN),
+                                        Collections.singleton(
+                                                "http://localhost:8080/demo-client/login/oauth2/code/demo"),
+                                        Collections.singleton("*")),
+                                new RegisteredClient(
+                                        UUID.randomUUID(),
+                                        "public-jwt",
+                                        passwordEncoder.encode("n/a"),
+                                        false,
+                                        AccessTokenFormat.JWT,
+                                        Set.of(GrantType.AUTHORIZATION_CODE),
+                                        Collections.singleton(
+                                                "http://localhost:8080/demo-client/login/oauth2/code/demo"),
+                                        Collections.singleton("*")),
+                                new RegisteredClient(
+                                        UUID.randomUUID(),
+                                        "public-jwt-angular",
+                                        passwordEncoder.encode("n/a"),
+                                        false,
+                                        AccessTokenFormat.JWT,
+                                        Set.of(GrantType.AUTHORIZATION_CODE),
+                                        Collections.singleton(
+                                                "http://localhost:4200/index.html"),
+                                        Collections.singleton("http://localhost:4200")),
+                                new RegisteredClient(
+                                        UUID.randomUUID(),
+                                        "confidential-opaque",
+                                        passwordEncoder.encode("demo"),
+                                        true,
+                                        AccessTokenFormat.OPAQUE,
+                                        Set.of(GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS, GrantType.PASSWORD, GrantType.REFRESH_TOKEN),
+                                        Collections.singleton(
+                                                "http://localhost:8080/demo-client/login/oauth2/code/demo"),
+                                        Collections.singleton("*")),
+                                new RegisteredClient(
+                                        UUID.randomUUID(),
+                                        "public-opaque",
+                                        passwordEncoder.encode("n/a"),
+                                        false,
+                                        AccessTokenFormat.OPAQUE,
+                                        Set.of(GrantType.AUTHORIZATION_CODE),
+                                        Collections.singleton(
+                                                "http://localhost:8080/demo-client/login/oauth2/code/demo"),
+                                        Collections.singleton("*")))
+                        .map(registeredClientRepository::save)
+                        .collect(Collectors.toSet());
+
+        LOG.info("Created {} clients", registeredClients.size());
     }
 
     private void createGroups() {
@@ -166,65 +225,5 @@ public class DataInitializer implements CommandLineRunner {
         );
 
         LOG.info("Created SCIM user/group mappings");
-    }
-
-
-    private void createClients() {
-        Set<RegisteredClient> registeredClients =
-                Stream.of(
-                        new RegisteredClient(
-                                UUID.randomUUID(),
-                                "confidential-jwt",
-                                passwordEncoder.encode("demo"),
-                                true,
-                                AccessTokenFormat.JWT,
-                                Set.of(GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS, GrantType.PASSWORD, GrantType.REFRESH_TOKEN),
-                                Collections.singleton(
-                                        "http://localhost:8080/demo-client/login/oauth2/code/demo"),
-                                Collections.singleton("*")),
-                        new RegisteredClient(
-                                UUID.randomUUID(),
-                                "public-jwt",
-                                passwordEncoder.encode("n/a"),
-                                false,
-                                AccessTokenFormat.JWT,
-                                Set.of(GrantType.AUTHORIZATION_CODE),
-                                Collections.singleton(
-                                        "http://localhost:8080/demo-client/login/oauth2/code/demo"),
-                                Collections.singleton("*")),
-                        new RegisteredClient(
-                                UUID.randomUUID(),
-                                "public-jwt-angular",
-                                passwordEncoder.encode("n/a"),
-                                false,
-                                AccessTokenFormat.JWT,
-                                Set.of(GrantType.AUTHORIZATION_CODE),
-                                Collections.singleton(
-                                        "http://localhost:4200/index.html"),
-                                Collections.singleton("http://localhost:4200")),
-                        new RegisteredClient(
-                                UUID.randomUUID(),
-                                "confidential-opaque",
-                                passwordEncoder.encode("demo"),
-                                true,
-                                AccessTokenFormat.OPAQUE,
-                                Set.of(GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS, GrantType.PASSWORD, GrantType.REFRESH_TOKEN),
-                                Collections.singleton(
-                                        "http://localhost:8080/demo-client/login/oauth2/code/demo"),
-                                Collections.singleton("*")),
-                        new RegisteredClient(
-                                UUID.randomUUID(),
-                                "public-opaque",
-                                passwordEncoder.encode("n/a"),
-                                false,
-                                AccessTokenFormat.OPAQUE,
-                                Set.of(GrantType.AUTHORIZATION_CODE),
-                                Collections.singleton(
-                                        "http://localhost:8080/demo-client/login/oauth2/code/demo"),
-                                Collections.singleton("*")))
-                        .map(registeredClientRepository::save)
-                        .collect(Collectors.toSet());
-
-        LOG.info("Created {} clients", registeredClients.size());
     }
 }

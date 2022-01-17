@@ -1,5 +1,6 @@
 package br.com.authorizationserver.scim.model;
 
+import br.com.authorizationserver.scim.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -106,6 +108,17 @@ public class ScimUserEntity extends ScimResourceEntity {
     private Set<String> x509Certificates = new HashSet<>();
 
     public ScimUserEntity() {
+    }
+
+    public ScimUserEntity(User user) {
+        this.setIdentifier(UUID.fromString(user.identifier));
+        this.userName = user.userName;
+        this.familyName = user.familyName;
+        this.givenName = user.givenName;
+        this.active = user.active;
+        this.password = user.password;
+        this.emails = new HashSet<ScimEmailEntity>(Arrays.asList(new ScimEmailEntity(user.email, "principal", true)));
+        this.roles = new HashSet<String>(user.roles);
     }
 
     public ScimUserEntity(UUID identifier) {

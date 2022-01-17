@@ -1,4 +1,12 @@
 spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: auth-server
+      username: admin
+      password: admin!
+      authentication-database: admin
   jpa:
     open-in-view: false
   jackson:

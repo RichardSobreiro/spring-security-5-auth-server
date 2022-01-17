@@ -1,57 +1,52 @@
 [
   {
-    "identifier": "1",
-    "userName ": "bergkamp",
+    "_id": "d57afc1a-bf80-43bc-b527-e7f4ab045849",
+    "userName": "bergkamp",
     "familyName": "Bergkamp",
     "givenName": "Dennis",
     "active": true,
-    "password": "123456",
-    "email": "@email.com",
-    "groups": "",
-    "roles": ""
+    "password": "{bcrypt}$2a$10$8IwHc6d/ufJ9hbtNxkPMRey5stBn/sp1jagIn2eO4I4H/F1u5g2gO",
+    "email": "dennis.bergkamp@email.com",
+    "roles": [ "USER" ]
   },
   {
-    "identifier": "2",
-    "userName ": "pele",
+    "_id": "f44a3799-2963-4e79-87f2-15c88261c82e",
+    "userName": "pele",
     "familyName": "Arantes do Nascimento",
     "givenName": "Edson",
     "active": true,
-    "password": "123456",
-    "email": "@email.com",
-    "groups": "",
-    "roles": ""
+    "password": "{bcrypt}$2a$10$8IwHc6d/ufJ9hbtNxkPMRey5stBn/sp1jagIn2eO4I4H/F1u5g2gO",
+    "email": "pele@email.com",
+    "roles": [ "USER" ]
   },
   {
-    "identifier": "3",
-    "userName ": "fenomeno",
+    "_id": "c702e923-d1ae-4c1c-8b16-02b707874eb6",
+    "userName": "fenomeno",
     "familyName": "Nazario dos Santos",
     "givenName": "Ronaldo",
     "active": true,
-    "password": "123456",
-    "email": "@email.com",
-    "groups": "",
-    "roles": ""
+    "password": "{bcrypt}$2a$10$8IwHc6d/ufJ9hbtNxkPMRey5stBn/sp1jagIn2eO4I4H/F1u5g2gO",
+    "email": "ronaldo.fenomeno@email.com",
+    "roles": [ "USER" ]
   },
   {
-    "identifier": "4",
-    "userName ": "cruyff",
+    "_id": "d616e84e-f366-4607-9ebe-4df8efef250a",
+    "userName": "cruyff",
     "familyName": "Cruyff",
     "givenName": "Johan",
     "active": true,
-    "password": "123456",
-    "email": "@email.com",
-    "groups": "",
-    "roles": ""
+    "password": "{bcrypt}$2a$10$8IwHc6d/ufJ9hbtNxkPMRey5stBn/sp1jagIn2eO4I4H/F1u5g2gO",
+    "email": "johan.cruyff@email.com",
+    "roles": [ "USER" ]
   },
   {
-    "identifier": "5",
-    "userName ": "platini",
+    "_id": "ae615d0c-39c4-48bf-9817-73e051a9a7e5",
+    "userName": "platini",
     "familyName": "Platini",
     "givenName": "Michel",
     "active": true,
-    "password": "123456",
-    "email": "michelplatini@email.com",
-    "groups": "",
-    "roles": ""
+    "password": "{bcrypt}$2a$10$8IwHc6d/ufJ9hbtNxkPMRey5stBn/sp1jagIn2eO4I4H/F1u5g2gO",
+    "email": "michel.platini@email.com",
+    "roles": [ "USER" ]
   }
 ]
