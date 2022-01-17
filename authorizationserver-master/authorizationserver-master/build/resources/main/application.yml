@@ -38,3 +38,45 @@ logging:
     org:
       springframework:
         security: debug
+---
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: auth-server
+      username: admin
+      password: admin!
+      authentication-database: admin
+    jpa:
+      open-in-view: false
+    jackson:
+      date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+      default-property-inclusion: non_null
+  server:
+    port: 9090
+    servlet:
+      context-path: /auth
+    error:
+      include-stacktrace: never
+
+  auth-server:
+    issuer: http://localhost:${server.port}${server.servlet.context-path}
+    access-token:
+      default-format: jwt
+      lifetime: 10m
+    id-token:
+      lifetime: 5m
+    refresh-token:
+      lifetime: 8h
+      max-lifetime: 8h
+
+  logging:
+    level:
+      com:
+        example:
+          authorizationserver: trace
+      org:
+        springframework:
+          security: debug
