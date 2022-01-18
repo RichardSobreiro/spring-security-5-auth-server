@@ -54,6 +54,7 @@ Mappings:
       CIDR: '10.0.102.0/24'
 
 Resources:
+# ---------------------------------------------------------------------------------------
   MyAPI:
     Type: AWS::ApiGatewayV2::Api
     Properties: 
@@ -68,7 +69,6 @@ Resources:
       Route: 
         AuthorizationType: JWT
         AuthorizerId: !Ref JWTAuthorizer
-  
   # Lambda Authorizer
   JWTAuthorizer:
     Type: AWS::ApiGatewayV2::Authorizer
@@ -118,17 +118,6 @@ Resources:
               - 'sts:AssumeRole'
       ManagedPolicyArns: 
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-
-  HttpApiVPCLink:
-    Type: AWS::ApiGatewayV2::VpcLink
-    Properties: 
-      Name: !Ref EnvironmentName
-      SecurityGroupIds: 
-        - !Ref ContainerSecurityGroup
-      SubnetIds: 
-        - !Ref PrivateSubnetOne
-        - !Ref PrivateSubnetTwo
-        - !Ref PrivateSubnetThree
   
   HttpApi:
     Type: AWS::ApiGatewayV2::Api

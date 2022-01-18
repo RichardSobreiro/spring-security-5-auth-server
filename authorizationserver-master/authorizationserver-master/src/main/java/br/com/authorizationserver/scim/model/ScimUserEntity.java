@@ -1,6 +1,6 @@
 package br.com.authorizationserver.scim.model;
 
-import br.com.authorizationserver.scim.entities.User;
+//import br.com.authorizationserver.scim.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -110,7 +110,7 @@ public class ScimUserEntity extends ScimResourceEntity {
     public ScimUserEntity() {
     }
 
-    public ScimUserEntity(User user) {
+    /*public ScimUserEntity(User user) {
         this.setIdentifier(UUID.fromString(user.identifier));
         this.userName = user.userName;
         this.familyName = user.familyName;
@@ -119,7 +119,7 @@ public class ScimUserEntity extends ScimResourceEntity {
         this.password = user.password;
         this.emails = new HashSet<ScimEmailEntity>(Arrays.asList(new ScimEmailEntity(user.email, "principal", true)));
         this.roles = new HashSet<String>(user.roles);
-    }
+    }*/
 
     public ScimUserEntity(UUID identifier) {
         this(identifier,  null, null, null, true, null, null, null, null);

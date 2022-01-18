@@ -55,14 +55,14 @@ spring:
       date-format: com.fasterxml.jackson.databind.util.StdDateFormat
       default-property-inclusion: non_null
   server:
-    port: 9090
+    port: 8080
     servlet:
       context-path: /auth
     error:
       include-stacktrace: never
 
   auth-server:
-    issuer: http://localhost:${server.port}${server.servlet.context-path}
+    issuer: http://${ISSUER_SUBDOMAIN}:${server.port}${server.servlet.context-path}
     access-token:
       default-format: jwt
       lifetime: 10m

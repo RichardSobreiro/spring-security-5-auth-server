@@ -1,3 +1,4 @@
+/*
 package br.com.authorizationserver.security.user.repository.Impl;
 
 import br.com.authorizationserver.security.user.repository.interfaces.UserRepositoryCustom;
@@ -40,3 +41,4 @@ public class UserCustomRepositoryImpl implements UserRepositoryCustom {
             return null;
     }
 }
+*/

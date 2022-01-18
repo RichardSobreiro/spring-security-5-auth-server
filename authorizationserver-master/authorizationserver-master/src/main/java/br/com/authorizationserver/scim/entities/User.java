@@ -1,3 +1,4 @@
+/*
 package br.com.authorizationserver.scim.entities;
 
 import org.springframework.data.annotation.Id;
@@ -20,3 +21,4 @@ public class User {
     public String email;
     public ArrayList<String> roles;
 }
+*/

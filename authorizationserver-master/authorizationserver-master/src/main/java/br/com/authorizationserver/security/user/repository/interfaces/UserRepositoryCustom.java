@@ -1,3 +1,4 @@
+/*
 package br.com.authorizationserver.security.user.repository.interfaces;
 
 import br.com.authorizationserver.scim.entities.User;
@@ -10,3 +11,4 @@ public interface UserRepositoryCustom {
     public Optional<User> loadUserByUsername(String userName);
     public Optional<User> findOneByIdentifier(String identifier);
 }
+*/

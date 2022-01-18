@@ -59,10 +59,10 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         long countUsers = this.scimUserEntityRepository.count();
         if (countUsers == 0) {
-//            createGroups();
-//            createAdminUser();
-//            createUsers();
-//            createGroupMappings();
+            createGroups();
+            createAdminUser();
+            createUsers();
+            createGroupMappings();
         }
 
         long countClients = this.registeredClientRepository.count();

@@ -62,30 +62,40 @@ Resources:
         info:
           title: !Ref EnvironmentName
         paths:
-          /auth/authorize:
-            get:
-              responses:
-                default:
-                  description: "302 Redirect for the login page (Authorization Code Enpoint)"
+          /{proxy+}:
+            x-amazon-apigateway-any-method:
+              responses: {}
               x-amazon-apigateway-integration:
                 payloadFormatVersion: "1.0"
                 connectionId: !Ref HttpApiVPCLink
                 type: "http_proxy"
                 httpMethod: "ANY"
-                uri: !GetAtt ServiceDiscoveryServiceFoodstoreFoods.Arn
+                uri: !GetAtt ServiceDiscoveryService.Arn
                 connectionType: "VPC_LINK"
-          /auth/token:
-            post:
-              responses:
-                default:
-                  description: "Default Oauth 2.0 token response"
-              x-amazon-apigateway-integration:
-                payloadFormatVersion: "1.0"
-                connectionId: !Ref HttpApiVPCLink
-                type: "http_proxy"
-                httpMethod: "ANY"
-                uri: !GetAtt ServiceDiscoveryServicePetstorePets.Arn
-                connectionType: "VPC_LINK"
+          # /auth/authorize:
+          #   get:
+          #     responses:
+          #       default:
+          #         description: "302 Redirect for the login page (Authorization Code Enpoint)"
+          #     x-amazon-apigateway-integration:
+          #       payloadFormatVersion: "1.0"
+          #       connectionId: !Ref HttpApiVPCLink
+          #       type: "http_proxy"
+          #       httpMethod: "ANY"
+          #       uri: !GetAtt ServiceDiscoveryService.Arn
+          #       connectionType: "VPC_LINK"
+          # /auth/token:
+          #   post:
+          #     responses:
+          #       default:
+          #         description: "Default Oauth 2.0 token response"
+          #     x-amazon-apigateway-integration:
+          #       payloadFormatVersion: "1.0"
+          #       connectionId: !Ref HttpApiVPCLink
+          #       type: "http_proxy"
+          #       httpMethod: "ANY"
+          #       uri: !GetAtt ServiceDiscoveryService.Arn
+          #       connectionType: "VPC_LINK"
         x-amazon-apigateway-cors:
           # This is a Test client web app that invokes the API, used in the blog post, for demostration purposes only.
           # In production, make sure that you do NOT allow any untrusted origin.
@@ -296,11 +306,23 @@ Resources:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       GroupId: !Ref ContainerSecurityGroup
-      SourceSecurityGroupId: !Ref ContainerSecurityGroup
+      #SourceSecurityGroupId: !Ref ContainerSecurityGroup
       IpProtocol: tcp
       FromPort: 0
       ToPort: 65535
       CidrIp: 0.0.0.0/0
+
+  HttpApiVPCLink:
+    Type: AWS::ApiGatewayV2::VpcLink
+    DependsOn: [ContainerSecurityGroup, PrivateSubnetOne, PrivateSubnetTwo, PrivateSubnetThree]
+    Properties: 
+      Name: !Ref EnvironmentName
+      SecurityGroupIds: 
+        - !Ref ContainerSecurityGroup
+      SubnetIds: 
+        - !Ref PrivateSubnetOne
+        - !Ref PrivateSubnetTwo
+        - !Ref PrivateSubnetThree
 
   PrivateDNSNamespace:
     Type: 'AWS::ServiceDiscovery::PrivateDnsNamespace'
@@ -308,7 +330,7 @@ Resources:
       Vpc: !Ref VPC
       Name: !Ref PrivateDNSNamespaceName
 
-  ServiceDiscoveryServiceFoodstoreFoods:
+  ServiceDiscoveryService:
     Type: 'AWS::ServiceDiscovery::Service'
     Properties:
       DnsConfig:
@@ -318,19 +340,7 @@ Resources:
         NamespaceId: !Ref PrivateDNSNamespace
       HealthCheckCustomConfig:
         FailureThreshold: 1
-      Name: 'foods.foodstore'
-
-  ServiceDiscoveryServicePetstorePets:
-    Type: 'AWS::ServiceDiscovery::Service'
-    Properties:
-      DnsConfig:
-        DnsRecords:
-          - Type: SRV
-            TTL: 60
-        NamespaceId: !Ref PrivateDNSNamespace
-      HealthCheckCustomConfig:
-        FailureThreshold: 1
-      Name: 'pets.petstore'
+      Name: 'authorizationserver'
 
   ECSRole:
     Type: AWS::IAM::Role
@@ -373,6 +383,8 @@ Resources:
             Service: [ecs-tasks.amazonaws.com]
           Action: ['sts:AssumeRole']
       Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
       Policies:
         - PolicyName: AmazonECSTaskExecutionRolePolicy
           PolicyDocument:
@@ -386,11 +398,10 @@ Resources:
                 - 'ecr:BatchGetImage'
 
                 # Allow the ECS tasks to upload logs to CloudWatch
-                - 'logs:CreateLogStream'
-                - 'logs:PutLogEvents'
+                - 'logs:*'
               Resource: '*'
 
-  TaskRoleFoodstoreFoods:
+  TaskRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -399,46 +410,61 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
             Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
       Policies:
-      - PolicyName: dynamodb-table-access
-        PolicyDocument:
-          Statement:
-          - Effect: Allow
-            Action:
-            - dynamodb:BatchGet*
-            - dynamodb:DescribeStream
-            - dynamodb:DescribeTable
-            - dynamodb:Get*
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:BatchWrite*
-            - dynamodb:CreateTable
-            - dynamodb:Delete*
-            - dynamodb:Update*
-            - dynamodb:PutItem
-            Resource: !GetAtt DynamoDBTableFoodstoreFoods.Arn
+        - PolicyName: AmazonECSTaskExecutionRolePolicy
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action:
+                # Allow the ECS Tasks to download images from ECR
+                - 'ecr:GetAuthorizationToken'
+                - 'ecr:BatchCheckLayerAvailability'
+                - 'ecr:GetDownloadUrlForLayer'
+                - 'ecr:BatchGetImage'
+
+                # Allow the ECS tasks to upload logs to CloudWatch
+                - 'logs:*'
+              Resource: '*'
   
-  TaskDefinitionFoodstoreFoods:
-    Type: 'AWS::ECS::TaskDefinition'
+  CloudwatchLogsGroup:
+    Type: 'AWS::Logs::LogGroup'
     Properties:
-      TaskRoleArn: !GetAtt TaskRoleFoodstoreFoods.Arn
+      LogGroupName: 'LogGroup-AuthorizationServer'
+      RetentionInDays: 1
+  
+  TaskDefinition:
+    Type: 'AWS::ECS::TaskDefinition'
+    DependsOn: [ CloudwatchLogsGroup ]
+    Properties:
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       RequiresCompatibilities:
         - FARGATE
       ContainerDefinitions:
-          - Name: 'FoodstoreFoods'
-            Image: 'simonepomata/ecsapi-demo-foodstore:latest'
+          - Name: 'AuthorizationServer'
+            Image: 'richardsobreiro/spring-security-5-auth-server:nomongodb'
             Essential: true
             PortMappings:
               - ContainerPort: 8080
                 Protocol: tcp
             Environment:
-              - Name: DynamoDBTable
-                Value: !Ref DynamoDBTableFoodstoreFoods
+              - Name: SPRING_PROFILES_ACTIVE
+                Value: dev
+              - Name: ISSUER_SUBDOMAIN
+                Value: 'authorizationserver.service'
+            LogConfiguration:
+              LogDriver: awslogs
+              Options:
+                awslogs-group: !Ref CloudwatchLogsGroup
+                awslogs-region: !Ref 'AWS::Region'
+                awslogs-stream-prefix: AuthorizationServer
       NetworkMode: awsvpc
       Memory: '1024'
       Cpu: '512'
 
-  ServiceFoodstoreFoods: 
+  Service: 
     Type: AWS::ECS::Service
     DependsOn:
       - PrivateRouteOne
@@ -446,11 +472,11 @@ Resources:
       - PrivateRouteThree
     Properties: 
       Cluster: !Ref ECSCluster
-      TaskDefinition: !Ref TaskDefinitionFoodstoreFoods
+      TaskDefinition: !Ref TaskDefinition
       LaunchType: FARGATE
-      DesiredCount: 3
+      DesiredCount: 1
       ServiceRegistries:
-        - RegistryArn: !GetAtt ServiceDiscoveryServiceFoodstoreFoods.Arn
+        - RegistryArn: !GetAtt ServiceDiscoveryService.Arn
           Port: 8080
       NetworkConfiguration:
           AwsvpcConfiguration:
